@@ -4,17 +4,13 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/Zeref101/internal/types"
 	"github.com/gin-gonic/gin"
 )
 
-type PlacesProps struct {
-	Title string `json:"title"`
-	ImgURL string `json:"img_url"`
-	Description string `json:"description"`
-}
 
 func GetPlaces(c *gin.Context){
-    var places_info []PlacesProps
+    var places_info []types.PlacesProps
     
     if err := c.ShouldBindJSON(&places_info); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
