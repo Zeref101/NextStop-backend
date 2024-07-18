@@ -1,37 +1,47 @@
 package db
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-var db *sql.DB
+var db *gorm.DB
 
 func ConnectToDB(){
 
-	connection_string := "user=postgres password=postgres dbname=postgres sslmode=disable host=localhost port=5432"
+	dsn := "user=postgres.mianfanfnhpopqdbbdzi password=thedarkslayer@59 dbname=postgres sslmode=require host=aws-0-ap-south-1.pooler.supabase.com port=6543"
 
-
-	db, err := sql.Open("postgres", connection_string)
+	var err error
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Failed to connect to db: ", err)
 	}
 
-	//  verifying the connection by pinging the db
+    sqlDB, err := db.DB()
+    if err != nil {
+        log.Fatal("Failed to get database connection:", err)
+    }
 
-	if err := db.Ping(); err != nil{
-		log.Fatal(err)
-	}
+    err = sqlDB.Ping()
+    if err != nil {
+        log.Fatal("Failed to ping database:", err)
+    }
 
-	fmt.Println("Successfully connected to PostgreSQL!")
+    log.Println("Database connection successfully established")
 
 }
 
 func CloseDB(){
 
-	if err := db.Close(); err != nil {
-		log.Fatal(err)
+	sqlDB, err := db.DB()
+
+	if err != nil{
+		log.Fatal("Failed to close db connection")
+	}
+	if err := sqlDB.Close(); err != nil{
+		log.Fatal("Failed to close db connection")
 	}
 }
