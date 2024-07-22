@@ -31,9 +31,12 @@ func main() {
 		AllowCredentials: true,
 		MaxAge: 12 * time.Hour,
 	}))
-	routes.PlacesInfoRoutes(r)
 
-	r.POST("/", greetings)
+	//? ROUTES
+	routes.PlacesInfoRoutes(r)
+	routes.UserRoutes(r)
+
+	r.GET("/", greetings)
 
 	r.Run(":7000")
 }
