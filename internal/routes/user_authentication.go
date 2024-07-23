@@ -17,6 +17,7 @@ func UserRoutes(router *gin.Engine){
 			
 		})
 		userGroup.POST("/sign_up", auth.Sign_up)
+		userGroup.POST("/sign_in", auth.Sign_in)
 	}
 	
 }
