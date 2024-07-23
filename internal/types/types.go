@@ -6,8 +6,18 @@ type PlacesProps struct {
 	Description string `json:"description"`
 }
 
-type UserSignUpProps struct {
+type User struct {
 	Username string `json:"username"`
 	Email string `json:"email"`
 	Password string `json:"password"`
+}
+
+type Sign_in_props struct {
+	Email string `json:"email"`
+	Password string `json:"password"`
+}
+
+func (User) TableName() string{
+
+	return "User"
 }
