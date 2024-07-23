@@ -13,7 +13,6 @@ func greetings(ctx *gin.Context) {
     ctx.JSON(http.StatusOK, gin.H{
         "Hello": "visitor",
     })
-    return
 }
 
 func main() {
@@ -37,6 +36,14 @@ func main() {
 	routes.UserRoutes(r)
 
 	r.GET("/", greetings)
+	// r.GET("/test-db", func(ctx *gin.Context){
+	// 	db.ConnectToDB()
+	// 	defer db.CloseDB()
+
+	// 	ctx.JSON(http.StatusOK, gin.H{
+	// 		"message": "Database connection successfully tested",
+	// 	})
+	// })
 
 	r.Run(":7000")
 }
